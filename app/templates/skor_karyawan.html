@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Skor Karyawan</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/interface/static/css/style.css">
 </head>
 <body>
 
@@ -11,12 +11,12 @@
     <div class="sidebar">
         <h2>SPK AHP & SAW</h2>
         <ul>
-            <li><a href="/templates/dashboard.html">Dashboard</a></li>
-            <li><a href="/templates/karyawan.html">Karyawan</a></li>
-            <li><a href="/templates/skor_karyawan.html">Skor Karyawan</a></li>
-            <li><a href="/templates/kriteria.html">Kriteria</a></li>
-            <li><a href="/templates/perbandingan_kriteria.html">Perbandingan Kriteria</a></li>
-            <li><a href="/templates/opsi_kriteria.html">Opsi Kriteria</a></li>
+            <li><a href="/interface/templates/dashboard.html">Dashboard</a></li>
+            <li><a href="/interface/templates/karyawan.html">Karyawan</a></li>
+            <li><a href="/interface/templates/skor_karyawan.html">Skor Karyawan</a></li>
+            <li><a href="/interface/templates/kriteria.html">Kriteria</a></li>
+            <li><a href="/interface/templates/perbandingan_kriteria.html">Perbandingan Kriteria</a></li>
+            <li><a href="/interface/templates/opsi_kriteria.html">Opsi Kriteria</a></li>
         </ul>
     </div>
 
@@ -25,4 +25,64 @@
         <div class="navbar">
             <div class="navbar-title">Skor Karyawan</div>
         </div>
+
+        <div class="container">
+            <h1>Input Skor Karyawan</h1>
+            <form id="form-skor">
+                <label for="karyawan">Nama Karyawan:</label>
+                <input type="text" id="karyawan" name="karyawan" placeholder="Nama Karyawan">
+
+                <label for="kriteria">Pilih Kriteria:</label>
+                <select id="kriteria" name="kriteria">
+                    <option value="golongan">Golongan</option>
+                    <option value="eselon">Eselon</option>
+                    <option value="jabatan">Jabatan</option>
+                    <option value="pendidikan">Pendidikan</option>
+                </select>
+
+                <label for="opsi">Pilih Opsi:</label>
+                <select id="opsi" name="opsi">
+                    <option value="">-- Pilih Opsi --</option>
+                    <option value="1">IV/a</option>
+                    <option value="0.75">III/d</option>
+                    <option value="0.5">II/b</option>
+                    <option value="0.25">I/a</option>
+                </select>
+
+                <button type="submit">Simpan Skor</button>
+            </form>
+
+            <h2>Data Skor Karyawan</h2>
+            <table class="table-kriteria">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Karyawan</th>
+                        <th>Kriteria</th>
+                        <th>Opsi</th>
+                        <th>Bobot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Badarudin</td>
+                        <td>Pendidikan</td>
+                        <td>S2</td>
+                        <td>1.00</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Anita</td>
+                        <td>Jabatan</td>
+                        <td>Staff</td>
+                        <td>0.20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
 
