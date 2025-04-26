@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Opsi Kriteria</title>
+    <link rel="stylesheet" href="/interface/static/css/style.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>SPK AHP & SAW</h2>
+        <ul>
+            <li><a href="/interface/templates/dashboard.html">Dashboard</a></li>
+            <li><a href="/interface/templates/karyawan.html">Karyawan</a></li>
+            <li><a href="/interface/templates/skor_karyawan.html">Skor Karyawan</a></li>
+            <li><a href="/interface/templates/kriteria.html">Kriteria</a></li>
+            <li><a href="/interface/templates/perbandingan_kriteria.html">Perbandingan Kriteria</a></li>
+            <li><a href="/interface/templates/opsi_kriteria.html">Opsi Kriteria</a></li>
+        </ul>
+    </div>
+
+         <!-- Konten Utama -->
+         <div class="main-content">
+            <div class="navbar">
+                <div class="navbar-title">Opsi Kriteria</div>
+            </div>
+
+            <div class="container">
+                <h1>Input Opsi Kriteria</h1>
+                <form id="form-opsi">
+                    <label for="kriteria">Pilih Kriteria:</label>
+                    <select id="kriteria" name="kriteria">
+                        <option value="golongan">Golongan</option>
+                        <option value="eselon">Eselon</option>
+                        <option value="jabatan">Jabatan</option>
+                        <option value="pendidikan">Pendidikan</option>
+                    </select>
+            
+                    <label for="opsi">Nama Opsi:</label>
+                    <input type="text" id="opsi" name="opsi" placeholder="Contoh: IV/a, S2, Staff">
+            
+                    <label for="bobot">Bobot:</label>
+                    <input type="number" step="0.01" id="bobot" name="bobot" placeholder="Contoh: 1.00">
+            
+                    <button type="submit">Simpan Opsi</button>
+                </form>
+            
+                <h2>Daftar Opsi Kriteria</h2>
+                <table class="table-kriteria">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kriteria</th>
+                            <th>Opsi</th>
+                            <th>Bobot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Pendidikan</td>
+                            <td>S2</td>
+                            <td>1.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Pendidikan</td>
+                            <td>S1</td>
+                            <td>0.75</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Jabatan</td>
+                            <td>Staff</td>
+                            <td>0.20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
