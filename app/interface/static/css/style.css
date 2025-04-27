@@ -1,7 +1,7 @@
 /* Reset Layout */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Helvetica, serif;
     display: flex;
     height: 100vh;
 }
@@ -60,7 +60,7 @@ body {
     background-color: #ffffff;
     padding: 15px 20px;
     font-size: 18px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
 }
 
 .navbar-title {
@@ -116,20 +116,6 @@ body {
     font-size: 16px;
 }
 
-form#form-karyawan {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-form#form-karyawan input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    flex: 1 1 30%;
-}
-
 form#form-karyawan button {
     padding: 10px 20px;
     background-color: #1f2937;
@@ -139,7 +125,92 @@ form#form-karyawan button {
     cursor: pointer;
 }
 
+form#form-skor button {
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+form#form-skor button:hover {
+    background-color: #374151;
+}
+
+form#form-perbandingan button{
+    padding: 10px 20px;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+form#form-karyawan {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+form#form-karyawan input,
+form#form-karyawan select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
 form#form-karyawan button:hover {
     background-color: #374151;
 }
 
+/* Gaya untuk kolom Pendidikan dengan tombol */
+.education-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.education-text {
+    flex-grow: 1;
+}
+
+/* Gaya tombol dari input pengguna */
+a.button-edit {
+    padding: 6px 12px;
+    background-color: #25eb2f;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+a.button-edit:hover {
+    background-color: #25eb2f;
+}
+
+a.button-hapus {
+    padding: 6px 12px;
+    background-color: #dc2626;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+a.button-hapus:hover {
+    background-color: #b91c1c;
+}
+
+form#form-perbandingan input[type="number"] {
+    width: 55%;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
