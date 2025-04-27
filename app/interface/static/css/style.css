@@ -168,6 +168,7 @@ form#form-karyawan button:hover {
     background-color: #374151;
 }
 
+<<<<<<< HEAD:app/interface/static/css/style.css
 /* Gaya untuk kolom Pendidikan dengan tombol */
 .education-cell {
     display: flex;
@@ -214,3 +215,102 @@ form#form-perbandingan input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 6px;
 }
+=======
+form#form-perbandingan {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+}
+
+form#form-perbandingan select,
+form#form-perbandingan input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+form#form-perbandingan button {
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+form#form-perbandingan button:hover {
+    background-color: #374151;
+}
+
+form#form-skor {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin-bottom: 40px;
+}
+
+form#form-skor label {
+    font-weight: bold;
+    color: #1f2937;
+}
+
+form#form-skor input,
+form#form-skor select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form#form-skor button {
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+form#form-skor button:hover {
+    background-color: #374151;
+}
+
+form#form-opsi {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin-bottom: 40px;
+}
+
+form#form-opsi label {
+    font-weight: bold;
+    color: #1f2937;
+}
+
+form#form-opsi input,
+form#form-opsi select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form#form-opsi button {
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+form#form-opsi button:hover {
+    background-color: #374151;
+}
+>>>>>>> 89871aee78f3c0f1d2a657f5db6e35937cef88cc:app/static/css/style.css
