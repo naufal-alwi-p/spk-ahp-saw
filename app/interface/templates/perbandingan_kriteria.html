@@ -22,7 +22,7 @@
 
         <div class="container">
             <h1>Input Perbandingan Kriteria</h1>
-            <form id="form-perbandingan">
+            <form id="form-perbandingan" method="post">
                 <table class="table-kriteria">
                     <thead>
                         <tr>
@@ -35,87 +35,15 @@
                     <tbody>
                         {% for perbandingan in perbandingan_kriteria %}
                             <tr>
-                                <input type="hidden" name="id[]" value="{{ perbandingan.id }}">
+                                <input type="hidden" name="id" value="{{ perbandingan.id }}">
                                 <td>{{ perbandingan.kriteria_1.nama }}</td>
-                                <input type="hidden" name="id_kriteria1[]" value="{{ perbandingan.id_kriteria1 }}">
-                                <td><input type="number" name="nilai_kriteria1[]" min="1" max="9" value="{{ perbandingan.nilai_kriteria1 }}" required></td>
+                                <input type="hidden" name="id_kriteria1" value="{{ perbandingan.id_kriteria1 }}">
+                                <td><input type="number" name="nilai_kriteria1" min="1" max="9" value="{{ perbandingan.nilai_kriteria1 }}" required></td>
                                 <td>{{ perbandingan.kriteria_2.nama }}</td>
-                                <input type="hidden" name="id_kriteria2[]" value="{{ perbandingan.id_kriteria2 }}">
-                                <td><input type="number" name="nilai_kriteria2[]" min="1" max="9" value="{{ perbandingan.nilai_kriteria2 }}" required></td>
+                                <input type="hidden" name="id_kriteria2" value="{{ perbandingan.id_kriteria2 }}">
+                                <td><input type="number" name="nilai_kriteria2" min="1" max="9" value="{{ perbandingan.nilai_kriteria2 }}" required></td>
                             </tr>
                         {% endfor %}
-                        <!-- <tr>
-                            <td>Golongan</td>
-                            <td><input type="number" name="nilai_golongan_eselon" min="1" max="9" required></td>
-                            <td>Eselon</td>
-                            <td><input type="number" name="nilai_eselon_golongan" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Golongan</td>
-                            <td><input type="number" name="nilai_golongan_jabatan" min="1" max="9" required></td>
-                            <td>Jabatan</td>
-                            <td><input type="number" name="nilai_jabatan_golongan" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Golongan</td>
-                            <td><input type="number" name="nilai_golongan_pendidikan" min="1" max="9" required></td>
-                            <td>Pendidikan</td>
-                            <td><input type="number" name="nilai_pendidikan_golongan" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Eselon</td>
-                            <td><input type="number" name="nilai_eselon_jabatan" min="1" max="9" required></td>
-                            <td>Golongan</td>
-                            <td><input type="number" name="nilai_jabatan_eselon" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Eselon</td>
-                            <td><input type="number" name="nilai_eselon_pendidikan" min="1" max="9" required></td>
-                            <td>Jabatan</td>
-                            <td><input type="number" name="nilai_pendidikan_eselon" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Eselon</td>
-                            <td><input type="number" name="nilai_eselon_pendidikan" min="1" max="9" required></td>
-                            <td>Pendidikan</td>
-                            <td><input type="number" name="nilai_pendidikan_eselon" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Jabatan</td>
-                            <td><input type="number" name="nilai_jabatan_pendidikan" min="1" max="9" required></td>
-                            <td>Golongan</td>
-                            <td><input type="number" name="nilai_pendidikan_jabatan" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Jabatan</td>
-                            <td><input type="number" name="nilai_jabatan_pendidikan" min="1" max="9" required></td>
-                            <td>Eselon</td>
-                            <td><input type="number" name="nilai_pendidikan_jabatan" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Jabatan</td>
-                            <td><input type="number" name="nilai_jabatan_pendidikan" min="1" max="9" required></td>
-                            <td>Pendidikan</td>
-                            <td><input type="number" name="nilai_pendidikan_jabatan" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Pendidikan</td>
-                            <td><input type="number" name="nilai_jabatan_pendidikan" min="1" max="9" required></td>
-                            <td>Golongan</td>
-                            <td><input type="number" name="nilai_pendidikan_jabatan" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Pendidikan</td>
-                            <td><input type="number" name="nilai_jabatan_pendidikan" min="1" max="9" required></td>
-                            <td>Eselon</td>
-                            <td><input type="number" name="nilai_pendidikan_jabatan" min="1" max="9" required></td>
-                        </tr>
-                        <tr>
-                            <td>Pendidikan</td>
-                            <td><input type="number" name="nilai_jabatan_pendidikan" min="1" max="9" required></td>
-                            <td>Jabatan</td>
-                            <td><input type="number" name="nilai_pendidikan_jabatan" min="1" max="9" required></td>
-                        </tr> -->
                     </tbody>
                 </table>
                 <button type="submit" style="margin-top: 20px;">Simpan Perbandingan</button>

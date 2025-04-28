@@ -40,12 +40,37 @@ def perbandingan_kriteria_page(request: Request, session: SessionDatabase):
         context={"perbandingan_kriteria": perbandingan_kriteria}
     )
 
-@app.get("/perbandingan-kriteria-handler")
+@app.post("/perbandingan-kriteria")
 def perbandingan_kriteria_handler(request: Request, session: SessionDatabase, formData: Annotated[FormPerbandinganKriteria, Form()]):
-    for data in formData:
-        print(type(data), data[0])
+    try:
+        perbandingan_kriteria = session.exec(select(Perbandingan_Kriteria)).all()
+    except:
+        raise HTTPException(500, detail="Internal Server Error")
+    
+    if len(formData.id) != len(perbandingan_kriteria):
+        raise HTTPException(500, detail="Internal Server Error")
+
+    is_commit = False
+
+    for i in range(len(perbandingan_kriteria)):
+        is_add = False
+        if (perbandingan_kriteria[i].nilai_kriteria1 != formData.nilai_kriteria1[i]):
+            perbandingan_kriteria[i].nilai_kriteria1 = formData.nilai_kriteria1[i]
+            is_add = True
+        
+        if (perbandingan_kriteria[i].nilai_kriteria2 != formData.nilai_kriteria2[i]):
+            perbandingan_kriteria[i].nilai_kriteria2 = formData.nilai_kriteria2[i]
+            is_add = True
+        
+        if is_add:
+            session.add(perbandingan_kriteria[i])
+            is_commit = True
+    
+    if is_commit:
+        session.commit()
+    
     return RedirectResponse(
-        url=str(request.base_url) + "karyawan",
+        url=str(request.base_url) + "perbandingan-kriteria",
         status_code=303
     )
 
