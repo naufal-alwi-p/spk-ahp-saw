@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Hasil</title>
-    <link rel="stylesheet" href="/interface/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <h2>SPK AHP & SAW</h2>
-        <ul>
-            <li><a href="/interface/templates/dashboard.html">Dashboard</a></li>
-            <li><a href="/interface/templates/karyawan.html">Karyawan</a></li>
-            <li><a href="/interface/templates/perbandingan_kriteria.html">Perbandingan Kriteria</a></li>
-            <li><a href="/interface/templates/hasil.html">Hasil</a></li>
-        </ul>
+        
+        {% include 'components/sidebar.html' %}
     </div>
 
     <!-- Konten Utama -->

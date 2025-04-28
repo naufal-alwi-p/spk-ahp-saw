@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Karyawan</title>
-    <link rel="stylesheet" href="/interface/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <h2>SPK AHP & SAW</h2>
-        <ul>
-            <li><a href="/interface/templates/dashboard.html">Dashboard</a></li>
-            <li><a href="/interface/templates/karyawan.html">Karyawan</a></li>
-            <li><a href="/interface/templates/perbandingan_kriteria.html">Perbandingan Kriteria</a></li>
-            <li><a href="/interface/templates/hasil.html">Hasil</a></li>
-        </ul>
+        
+        {% include 'components/sidebar.html' %}
     </div>
 
     <!-- Konten Utama -->
@@ -27,7 +23,7 @@
         <div class="container">
             <h1>Tambah Karyawan</h1>
             <form id="form-skor">
-                <a href="/interface/templates/tambah_karyawan.html">
+                <a href="/tambah-karyawan">
                     <button type="button">Tambah +</button>
                   </a>                  
             </form>
@@ -38,49 +34,48 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Karyawan</th>
-                        <th>Golongan</th>
+                        {% for kriteria in all_kriteria %}
+                            <th>{{ kriteria.nama }}</th>
+                        {% endfor %}
+                        <!-- <th>Golongan</th>
                         <th>Eselon</th>
                         <th>Jabatan</th>
-                        <th>Pendidikan</th>
+                        <th>Pendidikan</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Badarudin</td>
-                        <td>III/c</td>
-                        <td>Eselon IV</td>
-                        <td>Staff</td>
-                        <td>
-                            <div class="education-cell">
-                                <span class="education-text">S1</span>
-                                <div>
-                                    <a href="/interface/templates/edit_karyawan.html" class="button-edit">Edit</a>
-                                    <a href="#" class="button-hapus">Hapus</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Anita</td>
-                        <td>II/b</td>
-                        <td>Eselon II</td>
-                        <td>Sekretaris</td>
-                        <td>
-                            <div class="education-cell">
-                                <span class="education-text">S2</span>
-                                <div>
-                                    <a href="/interface/templates/edit_karyawan.html" class="button-edit">Edit</a>
-                                    <a href="#" class="button-hapus">Hapus</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                    {% for i, karyawan in all_karyawan %}
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ karyawan.nama }}</td>
+                            {% for skor_karyawan in karyawan.skor_karyawan %}
+                                {% if loop.last %}
+                                    <td>
+                                        <div class="education-cell">
+                                            <span class="education-text">{{ skor_karyawan.opsi_kriteria.opsi }}</span>
+                                            <div>
+                                                <a href="/edit-karyawan/{{ karyawan.id }}" class="button-edit">Edit</a>
+                                                <form action="/hapus-karyawan/{{ karyawan.id }}" method="post" onsubmit="return deletConfirmation()">
+                                                    <button type="submit" class="button-hapus">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td>{{ skor_karyawan.opsi_kriteria.opsi }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 
+    <script>
+        function deletConfirmation() {
+            return confirm("Apakah yakin ingin menghapus data karyawan ini?");
+        }
+    </script>
 </body>
 </html>

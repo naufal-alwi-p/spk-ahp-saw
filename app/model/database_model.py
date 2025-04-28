@@ -36,9 +36,9 @@ class Kriteria(SQLModel, table=True):
 class Perbandingan_Kriteria(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     id_kriteria1: int = Field(foreign_key="kriteria.id", ondelete="CASCADE")
-    nilai_kriteria1: float
+    nilai_kriteria1: int
     id_kriteria2: int = Field(foreign_key="kriteria.id", ondelete="CASCADE")
-    nilai_kriteria2: float
+    nilai_kriteria2: int
 
     # kriteria: Kriteria = Relationship(back_populates="perbandingan_kriteria")
     kriteria_1: Kriteria = Relationship(

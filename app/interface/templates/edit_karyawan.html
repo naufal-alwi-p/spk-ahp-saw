@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Karyawan</title>
-    <link rel="stylesheet" href="/interface/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <h2>SPK AHP & SAW</h2>
-        <ul>
-            <li><a href="/interface/templates/dashboard.html">Dashboard</a></li>
-            <li><a href="/interface/templates/karyawan.html">Karyawan</a></li>
-            <li><a href="/interface/templates/perbandingan_kriteria.html">Perbandingan Kriteria</a></li>
-            <li><a href="/interface/templates/hasil.html">Hasil</a></li>
-        </ul>
+        
+        {% include 'components/sidebar.html' %}
     </div>
 
     <!-- Konten Utama -->
@@ -27,45 +23,19 @@
         <div class="container">
             <h1>Form Edit Karyawan</h1>
 
-            <form id="form-karyawan">
-                <input type="text" id="nama_karyawan" name="nama_karyawan" value="Badarudin" required>
+            <form id="form-karyawan" method="post" action="/edit-karyawan/{{ karyawan.id }}">
+                <label for="nama_karyawan">Nama Karyawan:</label>
+                <input type="text" id="nama_karyawan" name="nama" placeholder="Nama Karyawan" value="{{ karyawan.nama }}" required>
 
-                <select id="golongan" name="golongan" required>
-                    <option value="">-- Pilih Golongan --</option>
-                    <option value="III/c" selected>III/c</option>
-                    <option value="III/d">III/d</option>
-                    <option value="IV/a">IV/a</option>
-                    <option value="IV/b">IV/b</option>
-                    <option value="IV/c">IV/c</option>
-                    <option value="IV/d">IV/d</option>
-                    <option value="IV/e">IV/e</option>
-                    <!-- Dan seterusnya -->
-                </select>
-
-                <select id="eselon" name="eselon" required>
-                    <option value="">-- Pilih Eselon --</option>
-                    <option value="Eselon IV" selected>Eselon IV</option>
-                    <option value="Eselon III">Eselon III</option>
-                    <option value="Eselon II">Eselon II</option>
-                    <option value="Eselon I">Eselon I</option>
-                </select>
-
-                <select id="jabatan" name="jabatan" required>
-                    <option value="">-- Pilih Jabatan --</option>
-                    <option value="Staff" selected>Staff</option>
-                    <option value="Ka.Seksi">Ka.Seksi</option>
-                    <option value="Ka.Bidang">Ka.Bidang</option>
-                    <option value="Ka.Subbag">Ka.Subbag</option>
-                    <option value="Sekretaris">Sekretaris</option>
-                </select>
-
-                <select id="pendidikan" name="pendidikan" required>
-                    <option value="">-- Pilih Pendidikan --</option>
-                    <option value="SMA" selected>SMA</option>
-                    <option value="D3-Sederajat">D3-Sederajat</option>
-                    <option value="S1-Sederajat">S1-Sederajat</option>
-                    <option value="S2">S2</option>
-                </select>
+                {% for i, kriteria in all_kriteria %}
+                    <label for="{{ kriteria.nama }}">{{ kriteria.nama }}</label>
+                    <input type="hidden" name="{{ 'kriteria' ~ (i + 1) }}" value="{{ kriteria.id }}">
+                    <select name="{{ 'opsi_kriteria' ~ (i + 1) }}" id="{{ kriteria.nama }}" required>
+                        {% for opsi in kriteria.opsi_kriteria %}
+                            <option value="{{ opsi.opsi }}" {% if karyawan.skor_karyawan[i].opsi_kriteria.opsi == opsi.opsi %} selected {% endif %}>{{ opsi.opsi }}</option>
+                        {% endfor %}
+                    </select>
+                {% endfor %}
 
                 <button type="submit">Simpan Perubahan</button>
             </form>

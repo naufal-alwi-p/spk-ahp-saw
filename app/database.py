@@ -2,7 +2,6 @@ import os
 
 from sqlalchemy.engine.url import URL
 from sqlmodel import create_engine, SQLModel, Session
-from sqlalchemy.util import EMPTY_DICT
 
 import model.database_model
 

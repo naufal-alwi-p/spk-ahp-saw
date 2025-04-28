@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/interface/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
     <!-- Sidebar -->
     <nav class="sidebar">
         <h2>SPK AHP & SAW</h2>
-        <ul>
-            <li><a href="/interface/templates/dashboard.html">Dashboard</a></li>
-            <li><a href="/interface/templates/karyawan.html">Karyawan</a></li>
-            <li><a href="/interface/templates/perbandingan_kriteria.html">Perbandingan Kriteria</a></li>
-            <li><a href="/interface/templates/hasil.html">Hasil</a></li>
-        </ul>
+        
+        {% include 'components/sidebar.html' %}
     </nav>
 
     <!-- Konten Utama -->
@@ -24,7 +20,7 @@
             <div class="navbar-title">Dashboard</div>
         </div>
         <div class="container">
-            <img src="/interface/static/images/images.png" alt="Logo" class="logo">
+            <img src="/static/images/images.png" alt="Logo" class="logo">
             <h1>Selamat Datang di Dashboard Sistem Penilaian Kenaikan Jabatan</h1>
             <p>Gunakan menu di samping untuk mengelola data karyawan, kriteria, dan perbandingan.</p>
         </div>

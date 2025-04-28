@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Perbandingan Kriteria</title>
-    <link rel="stylesheet" href="/interface/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <h2>SPK AHP & SAW</h2>
-        <ul>
-            <li><a href="/interface/templates/dashboard.html">Dashboard</a></li>
-            <li><a href="/interface/templates/karyawan.html">Karyawan</a></li>
-            <li><a href="/interface/templates/perbandingan_kriteria.html">Perbandingan Kriteria</a></li>
-            <li><a href="/interface/templates/hasil.html">Hasil</a></li>
-        </ul>
+        
+        {% include 'components/sidebar.html' %}
     </div>
 
     <!-- Konten Utama -->
@@ -37,7 +33,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {% for perbandingan in perbandingan_kriteria %}
+                            <tr>
+                                <input type="hidden" name="id[]" value="{{ perbandingan.id }}">
+                                <td>{{ perbandingan.kriteria_1.nama }}</td>
+                                <input type="hidden" name="id_kriteria1[]" value="{{ perbandingan.id_kriteria1 }}">
+                                <td><input type="number" name="nilai_kriteria1[]" min="1" max="9" value="{{ perbandingan.nilai_kriteria1 }}" required></td>
+                                <td>{{ perbandingan.kriteria_2.nama }}</td>
+                                <input type="hidden" name="id_kriteria2[]" value="{{ perbandingan.id_kriteria2 }}">
+                                <td><input type="number" name="nilai_kriteria2[]" min="1" max="9" value="{{ perbandingan.nilai_kriteria2 }}" required></td>
+                            </tr>
+                        {% endfor %}
+                        <!-- <tr>
                             <td>Golongan</td>
                             <td><input type="number" name="nilai_golongan_eselon" min="1" max="9" required></td>
                             <td>Eselon</td>
@@ -108,7 +115,7 @@
                             <td><input type="number" name="nilai_jabatan_pendidikan" min="1" max="9" required></td>
                             <td>Jabatan</td>
                             <td><input type="number" name="nilai_pendidikan_jabatan" min="1" max="9" required></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
                 <button type="submit" style="margin-top: 20px;">Simpan Perbandingan</button>
