@@ -25,17 +25,19 @@
             <table class="table-kriteria">
                 <thead>
                     <tr>
-                        <th>No</th>
                         <th>Nama</th>
                         <th>Nilai</th>
                         <th>Ranking</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>1</td><td>Josua</td><td>1</td><td>1</td></tr>
-                    <tr><td>2</td><td>Asep</td><td>0.85</td><td>2</td></tr>
-                    <tr><td>3</td><td>Badarudin</td><td>0.65</td><td>3</td></tr>
-                    <tr><td>4</td><td>Deddy</td><td>0.40</td><td>4</td></tr>
+                    {% for nama, nilai in score %}
+                        <tr>
+                            <td>{{nama }}</td>
+                            <td>{{ nilai }}</td>
+                            <td>{{ loop.index }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

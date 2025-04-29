@@ -22,7 +22,6 @@ class Kriteria(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     nama: str
 
-    # perbandingan_kriteria: list["Perbandingan_Kriteria"] = Relationship(back_populates="kriteria", cascade_delete=True)
     perbandingan_kriteria_1: list["Perbandingan_Kriteria"] = Relationship(
         back_populates="kriteria_1", sa_relationship_kwargs={"foreign_keys": "[Perbandingan_Kriteria.id_kriteria1]"}
     )
@@ -31,7 +30,6 @@ class Kriteria(SQLModel, table=True):
     )
     opsi_kriteria: list["Opsi_Kriteria"] = Relationship(back_populates="kriteria", cascade_delete=True)
     skor_karyawan: list["Skor_Karyawan"] = Relationship(back_populates="kriteria", cascade_delete=True)
-    # karyawan: list["Karyawan"] = Relationship(back_populates="kriteria", link_model=Skor_Karyawan)
 
 class Perbandingan_Kriteria(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
@@ -40,7 +38,6 @@ class Perbandingan_Kriteria(SQLModel, table=True):
     id_kriteria2: int = Field(foreign_key="kriteria.id", ondelete="CASCADE")
     nilai_kriteria2: int
 
-    # kriteria: Kriteria = Relationship(back_populates="perbandingan_kriteria")
     kriteria_1: Kriteria = Relationship(
         back_populates="perbandingan_kriteria_1", sa_relationship_kwargs={"foreign_keys": "[Perbandingan_Kriteria.id_kriteria1]"}
     )
@@ -53,4 +50,3 @@ class Karyawan(SQLModel, table=True):
     nama: str
 
     skor_karyawan: list[Skor_Karyawan] = Relationship(back_populates="karyawan", cascade_delete=True)
-    # kriteria: list[Kriteria] = Relationship(back_populates="karyawan", link_model=Skor_Karyawan)
