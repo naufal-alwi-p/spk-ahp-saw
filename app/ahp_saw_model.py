@@ -25,7 +25,6 @@ class DecisionSupportSystem:
         self.get_decision_matrix()
 
         self.calculate_consistency_ratio()
-        self.saw_normalize_matrix()
     
     # AHP
     def get_comparison_matrix(self, kriteria: list[Kriteria] = None, perbandingan_kriteria: list[Perbandingan_Kriteria] = None):
@@ -94,9 +93,14 @@ class DecisionSupportSystem:
 
                 index += 1
 
+        cols_all_zero = np.all(self.decision_matrix == 0, axis=0)
+
+        for i, is_zero in enumerate(cols_all_zero):
+            if is_zero:
+                self.decision_matrix[:, i] = 0.001
+
     def saw_normalize_matrix(self):
         max_values = self.decision_matrix.max(axis=0)
-        print(max_values)
         self.saw_normalized_matrix = self.decision_matrix / max_values
         return self.saw_normalized_matrix
 

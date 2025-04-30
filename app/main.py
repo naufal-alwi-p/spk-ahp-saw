@@ -73,6 +73,7 @@ def perbandingan_kriteria_handler(request: Request, session: SessionDatabase, fo
         session.commit()
     
     spk_model.get_comparison_matrix()
+    spk_model.calculate_consistency_ratio()
     
     return RedirectResponse(
         url=str(request.base_url) + "perbandingan-kriteria",
@@ -81,6 +82,12 @@ def perbandingan_kriteria_handler(request: Request, session: SessionDatabase, fo
 
 @app.get("/karyawan", response_class=HTMLResponse)
 def karyawan_page(request: Request, session: SessionDatabase):
+    if (spk_model.cr >= 0.1):
+        return RedirectResponse(
+            url=str(request.base_url) + "perbandingan-kriteria",
+            status_code=302
+        )
+    
     try:
         all_karyawan = session.exec(select(Karyawan)).all()
         all_kriteria = session.exec(select(Kriteria)).all()
@@ -98,6 +105,12 @@ def karyawan_page(request: Request, session: SessionDatabase):
 
 @app.get("/tambah-karyawan")
 def tambah_karyawan_page(request: Request, session: SessionDatabase):
+    if (spk_model.cr >= 0.1):
+        return RedirectResponse(
+            url=str(request.base_url) + "perbandingan-kriteria",
+            status_code=302
+        )
+    
     try:
         all_kriteria = session.exec(select(Kriteria)).all()
     except:
@@ -112,6 +125,12 @@ def tambah_karyawan_page(request: Request, session: SessionDatabase):
 
 @app.post("/tambah-karyawan")
 def tambah_karyawan_handler(request: Request ,session: SessionDatabase, formData: Annotated[FormKaryawan, Form()]):
+    if (spk_model.cr >= 0.1):
+        return RedirectResponse(
+            url=str(request.base_url) + "perbandingan-kriteria",
+            status_code=302
+        )
+    
     try:
         golongan = session.exec(select(Opsi_Kriteria).where(Opsi_Kriteria.id_kriteria == formData.kriteria1).where(Opsi_Kriteria.opsi == formData.opsi_kriteria1)).one()
         eselon = session.exec(select(Opsi_Kriteria).where(Opsi_Kriteria.id_kriteria == formData.kriteria2).where(Opsi_Kriteria.opsi == formData.opsi_kriteria2)).one()
@@ -142,6 +161,12 @@ def tambah_karyawan_handler(request: Request ,session: SessionDatabase, formData
 
 @app.get("/edit-karyawan/{id}")
 def update_karyawan_page(request: Request, id: int, session: SessionDatabase):
+    if (spk_model.cr >= 0.1):
+        return RedirectResponse(
+            url=str(request.base_url) + "perbandingan-kriteria",
+            status_code=302
+        )
+    
     try:
         karyawan = session.exec(select(Karyawan).where(Karyawan.id == id)).one()
         all_kriteria = session.exec(select(Kriteria)).all()
@@ -159,6 +184,12 @@ def update_karyawan_page(request: Request, id: int, session: SessionDatabase):
 
 @app.post("/edit-karyawan/{id}")
 def update_karyawan_handler(request: Request, id: int, session: SessionDatabase, formData: Annotated[FormKaryawan, Form()]):
+    if (spk_model.cr >= 0.1):
+        return RedirectResponse(
+            url=str(request.base_url) + "perbandingan-kriteria",
+            status_code=302
+        )
+    
     try:
         opsi_kriteria = [
             session.exec(select(Opsi_Kriteria).where(Opsi_Kriteria.id_kriteria == formData.kriteria1).where(Opsi_Kriteria.opsi == formData.opsi_kriteria1)).one(),
@@ -208,6 +239,12 @@ def update_karyawan_handler(request: Request, id: int, session: SessionDatabase,
 
 @app.post("/hapus-karyawan/{id}")
 def hapus_karyawan(request: Request, id: int, session: SessionDatabase):
+    if (spk_model.cr >= 0.1):
+        return RedirectResponse(
+            url=str(request.base_url) + "perbandingan-kriteria",
+            status_code=302
+        )
+    
     try:
         data_karyawan = session.exec(select(Karyawan).where(Karyawan.id == id)).one()
 
@@ -225,6 +262,17 @@ def hapus_karyawan(request: Request, id: int, session: SessionDatabase):
 
 @app.get("/hasil")
 def hasil_page(request: Request):
+    if (spk_model.cr >= 0.1):
+        return RedirectResponse(
+            url=str(request.base_url) + "perbandingan-kriteria",
+            status_code=302
+        )
+
+    if (len(spk_model.names) < 1):
+        return RedirectResponse(
+            url=str(request.base_url) + "karyawan"
+        )
+
     return templates.TemplateResponse(
         request=request,
         name="hasil.html",
