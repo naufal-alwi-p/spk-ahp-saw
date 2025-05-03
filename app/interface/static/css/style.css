@@ -41,9 +41,13 @@ body {
 }
 
 .sidebar ul li a:hover {
-    background-color: #374151;
     padding-left: 10px;
     transition: 0.3s;
+}
+
+.sidebar ul li a.active {
+    font-weight: bold;
+    padding-left: 10px;
 }
 
 /* Main Content Area */
@@ -78,9 +82,9 @@ body {
 }
 
 .logo {
-    width: 80px;
+    width: 150px;
     height: auto;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
     display: block;
 }
 
@@ -97,7 +101,6 @@ body {
 .table-kriteria td {
     padding: 12px;
     border: 1px solid #ccc;
-    text-align: left;
 }
 
 .table-kriteria th {
@@ -175,12 +178,8 @@ form#form-karyawan button:hover {
     justify-content: space-between;
 }
 
-.education-cell div {
+.action-cell {
     display: flex;
-}
-
-.education-text {
-    flex-grow: 1;
 }
 
 /* Gaya tombol dari input pengguna */
@@ -206,7 +205,7 @@ button.button-hapus {
     border-radius: 6px;
     font-size: 12px;
     margin-right: 5px;
-    border: none
+    border: none;
 }
 
 button.button-hapus:hover {
@@ -218,4 +217,47 @@ form#form-perbandingan input[type="number"] {
     padding: 2px;
     border: 1px solid #ccc;
     border-radius: 6px;
+}
+
+.continue-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #1f2937;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 20px;
+    transition: background-color 0.3s;
+}
+
+.continue-btn:hover {
+    background-color: #1f2937; 
+}
+ 
+.warning-message {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 10px 15px;
+    border: 1px solid #dc2626;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.warning-message span {
+    flex-grow: 1;
+}
+
+p.cr-konsisten {
+    color: green;
+    font-weight: bold;
+}
+
+p.cr-tidak-konsisten {
+    color: red;
+    font-weight: bold;
 }

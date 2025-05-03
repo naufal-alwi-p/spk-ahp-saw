@@ -22,6 +22,11 @@
 
         <div class="container">
             <h1>Input Perbandingan Kriteria</h1>
+            {% if error_message %}
+                <div id="warning-message" class="warning-message" style="display: flex;">
+                    <span>⚠️ Perhatian: {{ error_message }}</span>
+                </div>
+            {% endif %}
             <form id="form-perbandingan" method="post">
                 <table class="table-kriteria">
                     <thead>
@@ -48,6 +53,98 @@
                 </table>
                 <button type="submit" style="margin-top: 20px;">Simpan Perbandingan</button>
             </form>
+        </div>
+
+        <div class="container">
+            <h1>Hasil Penjumlahan Nilai dari Setiap Kolom</h1>
+            <table class="table-kriteria">
+                <thead>
+                    <tr>
+                        <th>Kriteria</th>
+                        {% for data_kriteria in kriteria %}
+                            <th>{{ data_kriteria.nama }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(kriteria | length) %}
+                        <tr>
+                            <td>{{ kriteria[i].nama }}</td>
+                            {% for j in range(spk_model.matrix[i] | length) %}
+                                <td>{{ spk_model.matrix[i][j] }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>N</td>
+                        {% for sum in spk_model.matrix.sum(axis=0) %}
+                            <td><b>{{ sum }}</b></td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">
+            <h1>Nilai Normalisasi Matriks</h1>
+            <table class="table-kriteria">
+                <thead>
+                    <tr>
+                        <th>Kriteria</th>
+                        {% for data_kriteria in kriteria %}
+                            <th>{{ data_kriteria.nama }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(kriteria | length) %}
+                        <tr>
+                            <td>{{ kriteria[i].nama }}</td>
+                            {% for j in range(spk_model.normalized_matrix[i] | length) %}
+                                <td>{{ spk_model.normalized_matrix[i][j].round(3) }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">
+            <h1>Bobot Prioritas</h1>
+            <table class="table-kriteria">
+                <thead>
+                    <tr>
+                        <th>Kriteria</th>
+                        <th>Bobot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(kriteria | length) %}
+                        <tr>
+                            <td>{{ kriteria[i].nama }}</td>
+                            <td>{{ spk_model.priority_vector[i].round(3) }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><b>N</b></td>
+                        <td><b>{{ spk_model.priority_vector.sum().round() }}</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">
+            <h1>Hasil Perhitungan Konsistensi</h1>
+            <p>Nilai CI = {{ spk_model.ci.round(3) }}</p>
+            <p>Nilai RI = {{ spk_model.ri }}</p>
+            <p id="hasil-cr" class="{% if spk_model.cr <= 0.1 %} cr-konsisten {% else %} cr-tidak-konsisten {% endif %}">
+                Nilai CR (<span id="nilai-cr">{{ spk_model.cr.round(3) }}</span>) {% if spk_model.cr <= 0.1 %} ≤ {% else %} > {% endif %} 0.1, maka perhitungan data <span id="status-konsistensi">{% if spk_model.cr <= 0.1 %} konsisten dan benar {% else %} tidak konsisten dan tidak benar {% endif %}</span>.
+            </p>
+            {% if spk_model.cr <= 0.1 %}
+                <a href="/karyawan" class="continue-btn">Lanjutkan</a>
+            {% else %}
+                <p class="continue-btn">Lanjutkan</p>
+            {% endif %}
         </div>
     </div>
 

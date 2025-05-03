@@ -28,19 +28,29 @@ def dashboard(request: Request):
     return templates.TemplateResponse(
         request=request,
         name="dashboard.html",
+        context={
+            "request": request
+        }
     )
 
 @app.get("/perbandingan-kriteria", response_class=HTMLResponse)
 def perbandingan_kriteria_page(request: Request, session: SessionDatabase):
     try:
         perbandingan_kriteria = session.exec(select(Perbandingan_Kriteria)).all()
+        kriteria = session.exec(select(Kriteria)).all()
     except:
         raise HTTPException(500, detail="Internal Server Error")
 
     return templates.TemplateResponse(
         request=request,
         name="perbandingan_kriteria.html",
-        context={"perbandingan_kriteria": perbandingan_kriteria}
+        context={
+            "perbandingan_kriteria": perbandingan_kriteria,
+            "kriteria": kriteria,
+            "spk_model": spk_model,
+            "error_message": request.headers.get("x-error-message"),
+            "request": request,
+        }
     )
 
 @app.post("/perbandingan-kriteria")
@@ -85,7 +95,10 @@ def karyawan_page(request: Request, session: SessionDatabase):
     if (spk_model.cr >= 0.1):
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302
+            status_code=302,
+            headers={
+                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
+            }
         )
     
     try:
@@ -98,8 +111,11 @@ def karyawan_page(request: Request, session: SessionDatabase):
         request=request,
         name="karyawan.html",
         context={
-            "all_karyawan": enumerate(all_karyawan),
-            "all_kriteria": all_kriteria
+            "all_karyawan": all_karyawan,
+            "all_kriteria": all_kriteria,
+            "request": request,
+            "spk_model": spk_model,
+            "error_message": request.headers.get("x-error-message"),
         }
     )
 
@@ -108,7 +124,10 @@ def tambah_karyawan_page(request: Request, session: SessionDatabase):
     if (spk_model.cr >= 0.1):
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302
+            status_code=302,
+            headers={
+                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
+            }
         )
     
     try:
@@ -119,7 +138,8 @@ def tambah_karyawan_page(request: Request, session: SessionDatabase):
         request=request,
         name="tambah_karyawan.html",
         context={
-            "all_kriteria": enumerate(all_kriteria)
+            "all_kriteria": enumerate(all_kriteria),
+            "request": request,
         }
     )
 
@@ -128,7 +148,10 @@ def tambah_karyawan_handler(request: Request ,session: SessionDatabase, formData
     if (spk_model.cr >= 0.1):
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302
+            status_code=302,
+            headers={
+                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
+            }
         )
     
     try:
@@ -153,6 +176,7 @@ def tambah_karyawan_handler(request: Request ,session: SessionDatabase, formData
         raise HTTPException(422, detail="Unprocessable Content")
     
     spk_model.get_decision_matrix()
+    spk_model.saw_normalize_matrix()
     
     return RedirectResponse(
         url=str(request.base_url) + "karyawan",
@@ -164,7 +188,10 @@ def update_karyawan_page(request: Request, id: int, session: SessionDatabase):
     if (spk_model.cr >= 0.1):
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302
+            status_code=302,
+            headers={
+                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
+            }
         )
     
     try:
@@ -178,7 +205,8 @@ def update_karyawan_page(request: Request, id: int, session: SessionDatabase):
         name="edit_karyawan.html",
         context={
             "karyawan": karyawan,
-            "all_kriteria": enumerate(all_kriteria)
+            "all_kriteria": enumerate(all_kriteria),
+            "request": request,
         }
     )
 
@@ -187,7 +215,10 @@ def update_karyawan_handler(request: Request, id: int, session: SessionDatabase,
     if (spk_model.cr >= 0.1):
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302
+            status_code=302,
+            headers={
+                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
+            }
         )
     
     try:
@@ -231,6 +262,7 @@ def update_karyawan_handler(request: Request, id: int, session: SessionDatabase,
         raise HTTPException(422, detail="Unprocessable Content")
     
     spk_model.get_decision_matrix()
+    spk_model.saw_normalize_matrix()
     
     return RedirectResponse(
         url=str(request.base_url) + "karyawan",
@@ -242,7 +274,10 @@ def hapus_karyawan(request: Request, id: int, session: SessionDatabase):
     if (spk_model.cr >= 0.1):
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302
+            status_code=302,
+            headers={
+                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
+            }
         )
     
     try:
@@ -254,6 +289,7 @@ def hapus_karyawan(request: Request, id: int, session: SessionDatabase):
         raise HTTPException(404, detail="Not Found")
     
     spk_model.get_decision_matrix()
+    spk_model.saw_normalize_matrix()
     
     return RedirectResponse(
         url=str(request.base_url) + "karyawan",
@@ -265,18 +301,26 @@ def hasil_page(request: Request):
     if (spk_model.cr >= 0.1):
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302
+            status_code=302,
+            headers={
+                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
+            }
         )
 
     if (len(spk_model.names) < 1):
         return RedirectResponse(
-            url=str(request.base_url) + "karyawan"
+            url=str(request.base_url) + "karyawan",
+            status_code=302,
+            headers={
+                "X-Error-Message": "Data Karyawan masih kosong, silahkan isi terlebih dahulu."
+            }
         )
 
     return templates.TemplateResponse(
         request=request,
         name="hasil.html",
         context={
-            "score": spk_model.evaluate()
+            "score": spk_model.evaluate(),
+            "request": request,
         }
     )

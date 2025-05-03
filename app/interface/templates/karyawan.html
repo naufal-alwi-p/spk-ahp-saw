@@ -22,6 +22,11 @@
 
         <div class="container">
             <h1>Tambah Karyawan</h1>
+            {% if error_message %}
+                <div id="warning-message" class="warning-message" style="display: flex;">
+                    <span>⚠️ Perhatian: {{ error_message }}</span>
+                </div>
+            {% endif %}
             <form id="form-skor">
                 <a href="/tambah-karyawan">
                     <button type="button">Tambah +</button>
@@ -37,34 +42,86 @@
                         {% for kriteria in all_kriteria %}
                             <th>{{ kriteria.nama }}</th>
                         {% endfor %}
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i, karyawan in all_karyawan %}
+                    {% for i in range(all_karyawan | length) %}
                         <tr>
                             <td>{{ i + 1 }}</td>
-                            <td>{{ karyawan.nama }}</td>
-                            {% for skor_karyawan in karyawan.skor_karyawan %}
-                                {% if loop.last %}
-                                    <td>
-                                        <div class="education-cell">
-                                            <span class="education-text">{{ skor_karyawan.opsi_kriteria.opsi }}</span>
-                                            <div>
-                                                <a href="/edit-karyawan/{{ karyawan.id }}" class="button-edit">Edit</a>
-                                                <form action="/hapus-karyawan/{{ karyawan.id }}" method="post" onsubmit="return deletConfirmation()">
-                                                    <button type="submit" class="button-hapus">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </td>
-                                {% else %}
-                                    <td>{{ skor_karyawan.opsi_kriteria.opsi }}</td>
-                                {% endif %}
+                            <td>{{ all_karyawan[i].nama }}</td>
+                            {% for skor_karyawan in all_karyawan[i].skor_karyawan %}
+                                <td>{{ skor_karyawan.opsi_kriteria.opsi }}</td>
+                            {% endfor %}
+                            <td class="action-cell">
+                                <a href="/edit-karyawan/{{ all_karyawan[i].id }}" class="button-edit">Edit</a>
+                                <form action="/hapus-karyawan/{{ all_karyawan[i].id }}" method="post" onsubmit="return deletConfirmation()">
+                                    <button type="submit" class="button-hapus">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container">
+            <h2>Matriks Rating Kecocokan Kriteria</h2>
+            <table class="table-kriteria">
+                <thead>
+                    <tr>
+                        <th rowspan="2">No</th>
+                        <th rowspan="2">Nama</th>
+                        <th colspan="4">Kriteria</th>
+                    </tr>
+                    <tr>
+                        {% for kriteria in all_kriteria %}
+                            <th>{{ kriteria.nama }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(all_karyawan | length) %}
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ all_karyawan[i].nama }}</td>
+                            {% for j in range(spk_model.decision_matrix[i] | length) %}
+                                <td>{{ spk_model.decision_matrix[i][j] }}</td>
                             {% endfor %}
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+
+        <div class="container">
+            <h2>Matriks Normalisasi Karyawan</h2>
+            <table class="table-kriteria">
+                <thead>
+                    <tr>
+                        <th rowspan="2">No</th>
+                        <th rowspan="2">Nama</th>
+                        <th colspan="4">Kriteria</th>
+                    </tr>
+                    <tr>
+                        {% for kriteria in all_kriteria %}
+                            <th>{{ kriteria.nama }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(all_karyawan | length) %}
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ all_karyawan[i].nama }}</td>
+                            {% for j in range(spk_model.saw_normalized_matrix[i] | length) %}
+                                <td>{{ spk_model.saw_normalized_matrix[i][j] }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/hasil" class="continue-btn">Lanjutkan</a>
         </div>
     </div>
 

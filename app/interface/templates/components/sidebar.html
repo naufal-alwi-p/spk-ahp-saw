@@ -1,6 +1,6 @@
 <ul>
-    <li><a href="/">Dashboard</a></li>
-    <li><a href="/perbandingan-kriteria">Perbandingan Kriteria</a></li>
-    <li><a href="/karyawan">Karyawan</a></li>
-    <li><a href="/hasil">Hasil</a></li>
+    <li><a href="/" class="{% if request.url.path == '/' %} active {% endif %}">Dashboard</a></li>
+    <li><a href="/perbandingan-kriteria" class="{% if request.url.path == '/perbandingan-kriteria' %} active {% endif %}">Perbandingan Kriteria</a></li>
+    <li><a href="/karyawan" class="{% if request.url.path == '/karyawan' or request.url.path == '/tambah-karyawan' or '/edit-karyawan' in request.url.path %} active {% endif %}">Karyawan</a></li>
+    <li><a href="/hasil" class="{% if request.url.path == '/hasil' %} active {% endif %}">Hasil</a></li>
 </ul>
