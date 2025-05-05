@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, Request, HTTPException, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.sessions import SessionMiddleware
 from sqlmodel import Session, select
 from database import get_session
 from model.database_model import Kriteria, Perbandingan_Kriteria, Opsi_Kriteria, Karyawan, Skor_Karyawan
@@ -14,6 +15,8 @@ app = FastAPI(
     redoc_url=None,
     openapi_url=None
 )
+
+app.add_middleware(SessionMiddleware, secret_key="ahp-saw-projek")
 
 app.mount("/static", StaticFiles(directory="app/interface/static"), "assets")
 
@@ -48,7 +51,7 @@ def perbandingan_kriteria_page(request: Request, session: SessionDatabase):
             "perbandingan_kriteria": perbandingan_kriteria,
             "kriteria": kriteria,
             "spk_model": spk_model,
-            "error_message": request.headers.get("x-error-message"),
+            "error_message": request.session.pop("error_message", None),
             "request": request,
         }
     )
@@ -93,12 +96,10 @@ def perbandingan_kriteria_handler(request: Request, session: SessionDatabase, fo
 @app.get("/karyawan", response_class=HTMLResponse)
 def karyawan_page(request: Request, session: SessionDatabase):
     if (spk_model.cr >= 0.1):
+        request.session['error_message'] = "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302,
-            headers={
-                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
-            }
+            status_code=302
         )
     
     try:
@@ -115,19 +116,17 @@ def karyawan_page(request: Request, session: SessionDatabase):
             "all_kriteria": all_kriteria,
             "request": request,
             "spk_model": spk_model,
-            "error_message": request.headers.get("x-error-message"),
+            "error_message": request.session.pop("error_message", None),
         }
     )
 
 @app.get("/tambah-karyawan")
 def tambah_karyawan_page(request: Request, session: SessionDatabase):
     if (spk_model.cr >= 0.1):
+        request.session['error_message'] = "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302,
-            headers={
-                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
-            }
+            status_code=302
         )
     
     try:
@@ -146,12 +145,10 @@ def tambah_karyawan_page(request: Request, session: SessionDatabase):
 @app.post("/tambah-karyawan")
 def tambah_karyawan_handler(request: Request ,session: SessionDatabase, formData: Annotated[FormKaryawan, Form()]):
     if (spk_model.cr >= 0.1):
+        request.session['error_message'] = "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302,
-            headers={
-                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
-            }
+            status_code=302
         )
     
     try:
@@ -186,12 +183,10 @@ def tambah_karyawan_handler(request: Request ,session: SessionDatabase, formData
 @app.get("/edit-karyawan/{id}")
 def update_karyawan_page(request: Request, id: int, session: SessionDatabase):
     if (spk_model.cr >= 0.1):
+        request.session['error_message'] = "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302,
-            headers={
-                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
-            }
+            status_code=302
         )
     
     try:
@@ -213,12 +208,10 @@ def update_karyawan_page(request: Request, id: int, session: SessionDatabase):
 @app.post("/edit-karyawan/{id}")
 def update_karyawan_handler(request: Request, id: int, session: SessionDatabase, formData: Annotated[FormKaryawan, Form()]):
     if (spk_model.cr >= 0.1):
+        request.session['error_message'] = "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302,
-            headers={
-                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
-            }
+            status_code=302
         )
     
     try:
@@ -272,12 +265,10 @@ def update_karyawan_handler(request: Request, id: int, session: SessionDatabase,
 @app.post("/hapus-karyawan/{id}")
 def hapus_karyawan(request: Request, id: int, session: SessionDatabase):
     if (spk_model.cr >= 0.1):
+        request.session['error_message'] = "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302,
-            headers={
-                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
-            }
+            status_code=302
         )
     
     try:
@@ -299,21 +290,17 @@ def hapus_karyawan(request: Request, id: int, session: SessionDatabase):
 @app.get("/hasil")
 def hasil_page(request: Request):
     if (spk_model.cr >= 0.1):
+        request.session['error_message'] = "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
         return RedirectResponse(
             url=str(request.base_url) + "perbandingan-kriteria",
-            status_code=302,
-            headers={
-                "X-Error-Message": "Nilai CR ≤ 0.1 tidak bisa lanjut ke tahap berikutnya."
-            }
+            status_code=302
         )
 
     if (len(spk_model.names) < 1):
+        request.session['error_message'] = "Data Karyawan masih kosong, silahkan isi terlebih dahulu."
         return RedirectResponse(
             url=str(request.base_url) + "karyawan",
-            status_code=302,
-            headers={
-                "X-Error-Message": "Data Karyawan masih kosong, silahkan isi terlebih dahulu."
-            }
+            status_code=302
         )
 
     return templates.TemplateResponse(

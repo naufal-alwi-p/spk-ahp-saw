@@ -71,7 +71,7 @@
                         <tr>
                             <td>{{ kriteria[i].nama }}</td>
                             {% for j in range(spk_model.matrix[i] | length) %}
-                                <td>{{ spk_model.matrix[i][j] }}</td>
+                                <td>{{ spk_model.matrix[i][j].round(3) }}</td>
                             {% endfor %}
                         </tr>
                     {% endfor %}

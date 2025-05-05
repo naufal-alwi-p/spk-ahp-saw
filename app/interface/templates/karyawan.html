@@ -21,12 +21,13 @@
         </div>
 
         <div class="container">
-            <h1>Tambah Karyawan</h1>
             {% if error_message %}
                 <div id="warning-message" class="warning-message" style="display: flex;">
                     <span>⚠️ Perhatian: {{ error_message }}</span>
                 </div>
             {% endif %}
+            <h1>Tambah Karyawan</h1>
+
             <form id="form-skor">
                 <a href="/tambah-karyawan">
                     <button type="button">Tambah +</button>
@@ -115,7 +116,7 @@
                             <td>{{ i + 1 }}</td>
                             <td>{{ all_karyawan[i].nama }}</td>
                             {% for j in range(spk_model.saw_normalized_matrix[i] | length) %}
-                                <td>{{ spk_model.saw_normalized_matrix[i][j] }}</td>
+                                <td>{{ spk_model.saw_normalized_matrix[i][j].round(3) }}</td>
                             {% endfor %}
                         </tr>
                     {% endfor %}
